@@ -41,4 +41,4 @@ vignettes/*.pdf
 #omitir archivos
 Data/
 *.zip
-
+*.png
