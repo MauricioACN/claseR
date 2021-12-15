@@ -75,7 +75,6 @@ mis_estudiantes$paso = ifelse(mis_estudiantes$nota_numero<3,"perdio","paso")
 
 str(mis_estudiantes)
 
-
 #funciones
 
 mi_primera_funcion = function(parametro1,parametro2){
