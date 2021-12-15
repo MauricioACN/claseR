@@ -1,0 +1,57 @@
+---
+title: "Informe de Proyecto entrega 3"
+author: "Alejandro Cano"
+date: "15/12/2021"
+output: html_document
+
+---
+
+## Introducción
+
+Esta es la introducción de mi proyecto
+
+### Problema a solucionar
+
+Explico mi problema a solucionar
+
+### Hipótesis a validar
+
+Explico mi(s) hipótesis a validar
+
+## Base inicial
+
+Esta es la estructura de mi base inicial
+
+```{r}
+
+mis_estudiantes = data.frame("estudiante" = c("pepito","pepito2","pepito3"),
+                             "nota" = c(5.0,4.0,2.0))
+
+head(mis_estudiantes)
+
+```
+
+
+
+```{r}
+#validacion de datos nulos
+
+nulos = 100
+registros_totales =  1000
+
+porcentaje_nulos = round(nulos/registros_totales*100)
+porcentaje_nulos
+
+```
+
+
+### Resumenes principales de mi base de datos
+
+los problemas encontrados fueron:
+
+* Encontre 10% porciento de valores nulos
+- Encontre errores asociados a la etiqueta nombre del estudiante y las modifique según estos criterios
+
+** nombres mal escritos
+** errores de codificación
+
