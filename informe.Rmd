@@ -22,18 +22,37 @@ Explico mi(s) hipótesis a validar
 
 Esta es la estructura de mi base inicial
 
+
+para reproducir este informe se requeiren las siguientes librerias:
+
+```{r}
+#librerias
+library(tidyverse)
+library(DT)
+
+```
+
+
 ```{r}
 
-mis_estudiantes = data.frame("estudiante" = c("pepito","pepito2","pepito3"),
-                             "nota" = c(5.0,4.0,2.0))
+#carga de datos
+base = read.csv("Data/PopulationByAgeSex.csv", header = T, sep = ",", dec = ".", stringsAsFactors = F)
 
-head(mis_estudiantes)
+
+#resumenes para joins
+resumen_colombia = base %>% filter(Location == "Colombia",
+                                   Time<2021)
+
+futuro_colombia = base %>% filter(Location == "Colombia",
+                                   Time>2021)
+
+DT::datatable(head(futuro_colombia[,c(1:10)]))
 
 ```
 
 
 
-```{r}
+```{r warning=FALSE}
 #validacion de datos nulos
 
 nulos = 100
@@ -50,8 +69,11 @@ porcentaje_nulos
 los problemas encontrados fueron:
 
 * Encontre 10% porciento de valores nulos
-- Encontre errores asociados a la etiqueta nombre del estudiante y las modifique según estos criterios
+* Encontre errores asociados a la etiqueta nombre del estudiante y las modifique según estos criterios
+    + nombres mal escritos
+    + errores de codificación
 
-** nombres mal escritos
-** errores de codificación
+# Conclusiones
+
+
 
