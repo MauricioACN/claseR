@@ -27,8 +27,8 @@ para reproducir este informe se requeiren las siguientes librerias:
 
 ```{r}
 #librerias
+library(readr)
 library(tidyverse)
-library(DT)
 
 ```
 
@@ -36,30 +36,52 @@ library(DT)
 ```{r}
 
 #carga de datos
-base = read.csv("Data/PopulationByAgeSex.csv", header = T, sep = ",", dec = ".", stringsAsFactors = F)
-
-
-#resumenes para joins
-resumen_colombia = base %>% filter(Location == "Colombia",
-                                   Time<2021)
-
-futuro_colombia = base %>% filter(Location == "Colombia",
-                                   Time>2021)
-
-DT::datatable(head(futuro_colombia[,c(1:10)]))
+PopulationByAgeSex <- read_csv("Data/PopulationByAgeSex.csv")
 
 ```
 
 
 
-```{r warning=FALSE}
-#validacion de datos nulos
+```{r warning=FALSE, echo=FALSE}
+#transformaciones
+base_nueva = PopulationByAgeSex %>% select(Location,Time,PopMale,PopFemale)
+paises_latinoamerica = c("Colombia","Venezuela","Chile","Peru","Argentina")
 
-nulos = 100
-registros_totales =  1000
+#filter que permite filtrar por una o mas variables
 
-porcentaje_nulos = round(nulos/registros_totales*100)
-porcentaje_nulos
+latin_base = base_nueva %>% filter(Location %in% paises_latinoamerica)
+
+
+#mutate nuevas variables dentro de un data frame
+latin_base_poptotal = latin_base %>% mutate(PopTotal = PopMale+PopFemale)
+
+
+#resumenes
+#group_by agrupa por una o multiples variables
+#summarize para calcular metricas sobre esas/esa variable/s agrupadas
+#arrange ordendar y se puede usar con desc() para mostrarlo de manera descendente
+
+sum_max_pop = latin_base_poptotal %>% 
+  group_by(Location) %>% 
+  summarize(max_popFemale = max(PopFemale),
+            max_popMale = max(PopMale)) %>%
+  mutate(diferencia = max_popFemale-max_popMale) %>% 
+  arrange(desc(diferencia))
+
+```
+
+```{r }
+nuevo_df_collaps = gather(sum_max_pop,categorias,valores,-Location)
+nuevo_df_collaps_nuevo = nuevo_df_collaps %>% filter(categorias!="diferencia")
+
+```
+
+
+```{r}
+
+#graficos
+ggplot(nuevo_df_collaps_nuevo, aes(x = Location, y = valores, fill = categorias)) + 
+  geom_bar(stat='identity')
 
 ```
 
